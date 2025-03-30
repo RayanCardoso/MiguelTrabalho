@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 const Quiz = () => {
+  const navigation = useNavigation();
+
   return (
     <LinearGradient colors={['#59A8DA', '#FFFFFF']} style={styles.container}>
       <View style={styles.logoContainer}>
@@ -10,13 +13,13 @@ const Quiz = () => {
         <Image source={require('../../assets/faeterj_logo.png')} style={styles.logo} />
       </View>
       <View style={styles.optionsContainer}>
-        <TouchableOpacity style={styles.optionButton}>
+        <TouchableOpacity onPress={() => navigation.navigate("QuizQuestions", { subject: "5PDM" })} style={styles.optionButton}>
           <Text style={styles.optionText}>5PDM</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton}>
+        <TouchableOpacity onPress={() => navigation.navigate("QuizQuestions", { subject: "4UBD" })} style={styles.optionButton}>
           <Text style={styles.optionText}>4UBD</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.optionButton}>
+        <TouchableOpacity onPress={() => navigation.navigate("QuizQuestions", { subject: "4POA" })} style={styles.optionButton}>
           <Text style={styles.optionText}>4POA</Text>
         </TouchableOpacity>
       </View>
