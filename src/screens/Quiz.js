@@ -1,17 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
 
 const Quiz = () => {
   const navigation = useNavigation();
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) navigation.replace('Login');
+    });
+
+    return () => unsubscribe(); //
+  }, []);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        navigation.replace('Login'); // redireciona após logout
+      })
+      .catch((error) => {
+        console.error('Erro ao sair:', error); // loga erro se falhar
+      });
+  };
 
   return (
     <LinearGradient colors={['#59A8DA', '#FFFFFF']} style={styles.container}>
+
+      {/* ✅ Botão de logout funcional */}
+      <View>
+        <TouchableOpacity onPress={handleSignOut}>
+          <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 18 }}>Sair</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.logoContainer}>
         <Image source={require('../../assets/icons_quiz.png')} style={styles.iconMath} />
         <Image source={require('../../assets/faeterj_logo.png')} style={styles.logo} />
       </View>
+
       <View style={styles.optionsContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("QuizQuestions", { subject: "5PDM" })} style={styles.optionButton}>
           <Text style={styles.optionText}>5PDM</Text>
@@ -27,6 +56,7 @@ const Quiz = () => {
   );
 };
 
+// (sem alterações aqui)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
