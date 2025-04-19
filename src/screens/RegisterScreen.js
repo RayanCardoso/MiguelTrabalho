@@ -3,19 +3,22 @@ import { View, TextInput, Button, StyleSheet, Text, Alert, TouchableOpacity } fr
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../FirebaseConfig';
 
-export default function LoginScreen({ navigation }) {
+export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, senha)
-      .then(() => {navigation.replace('DrawerRoutes');})
-      .catch(error => Alert.alert('Erro ao fazer login', error.message));
+  
+  const handleCadastro = () => {
+    createUserWithEmailAndPassword(auth, email, senha)
+      .then(() => {
+        Alert.alert('Cadastro realizado com sucesso!');
+        navigation.replace('Quiz');
+      })
+      .catch(error => Alert.alert('Erro ao cadastrar', error.message));
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Registro</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -32,14 +35,15 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry
       />
       <View style={{ marginVertical: 10 }} />
-      <Button title="Entrar" onPress={handleLogin} />
+      <Button title="Cadastrar" onPress={handleCadastro} />
       <TouchableOpacity
         onPress={() => {
-          navigation.replace('Register')
+          navigation.replace("Login")
         }}
       >
-        <Text style={styles.textOtherPage}>Não tem Login? Cadastre-se</Text>
+        <Text style={styles.textOtherPage}>Já tem login? Entre agora</Text>
       </TouchableOpacity>
+      
     </View>
   );
 }
@@ -57,6 +61,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
+  textOtherPage: {
+    color: 'blue'
+  },
   input: {
     height: 50,
     borderWidth: 1,
@@ -64,8 +71,5 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     borderRadius: 8,
-  },
-  textOtherPage: {
-    color: 'blue'
   },
 });

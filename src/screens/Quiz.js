@@ -29,13 +29,6 @@ const Quiz = () => {
   return (
     <LinearGradient colors={['#59A8DA', '#FFFFFF']} style={styles.container}>
 
-      {/* ✅ Botão de logout funcional */}
-      <View>
-        <TouchableOpacity onPress={handleSignOut}>
-          <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 18 }}>Sair</Text>
-        </TouchableOpacity>
-      </View>
-
       <View style={styles.logoContainer}>
         <Image source={require('../../assets/icons_quiz.png')} style={styles.iconMath} />
         <Image source={require('../../assets/faeterj_logo.png')} style={styles.logo} />
