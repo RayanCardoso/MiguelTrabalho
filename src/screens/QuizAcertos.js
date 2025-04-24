@@ -7,7 +7,7 @@ export default function QuizAcertos() {
   const route = useRoute();
   const { quantityErrors } = route.params;
 
-  const rightness = quantityErrors ? 10 - parseInt(quantityErrors) : 0;
+  const rightness = 10 - parseInt(quantityErrors);
 
   return (
     quantityErrors >= 4
